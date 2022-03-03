@@ -84,12 +84,10 @@ function update(){
         resetDiv.classList.add('active-but');
         if (document.querySelector('#custom') !== null){
             b = parseFloat(b) / 100;
-            console.log(b)
             tip = (a / c) * b;
         } else {
             d = parseInt(temp);
             d = parseFloat(d) / 100;
-            console.log(d)
             tip = (a / c) * d;
         }
         total = (a / c) + tip;
