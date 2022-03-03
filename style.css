@@ -30,7 +30,7 @@ main {
     border-radius: 20px;
     display: flex;
     justify-content: space-between;
-    width: 850px;
+    width: 880px;
     height: 460px;
     background-color: #fff;
     padding: 20px;
@@ -183,11 +183,13 @@ input::-webkit-inner-spin-button {
 }
 
 .screens h3 {
+    white-space: nowrap;
     font-size: 15px;
     font-weight: 500;
 }
 
 .screens h4 {
+    white-space: nowrap;
     font-size: 14px;
     color: #5e7a7d;
 }

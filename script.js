@@ -1,11 +1,14 @@
 const col = document.querySelectorAll('.column div');
 const column = document.querySelector('.column');
 const people = document.querySelector('.input-people input');
-const totaltip = document.querySelector('.total p');
+const totalTip = document.querySelector('.total p');
 const tipAmount = document.querySelector('.tip-amount p');
+const resetDiv = document.querySelector('.reset');
+const resetBtn = document.querySelector('.reset button');
 let inputs = document.querySelectorAll('.content input');
 let tip = 0;
 let total = 0;
+let temp;
 let a;
 let b;
 let c;
@@ -27,7 +30,6 @@ col.forEach(c => {
             col = document.querySelectorAll('.column div');
             checkI();
         } else {
-            console.log(c)
             for (let i = 0; i < col.length; i++){
                 if (c === col[i] && !c.classList.contains('col-active')){
                     c.classList.add('col-active');
@@ -38,10 +40,11 @@ col.forEach(c => {
                 }
             }
             d = c.innerText;
+            temp = d.replace('%', '');
+            update();
         }
         if (document.querySelector('#custom') !== null){
             for (let j = 0; j < col.length; j++){
-                console.log(col[j])
                 col[j].classList.remove('col-active');
             }
         }
@@ -50,8 +53,11 @@ col.forEach(c => {
 
 function checkI(){
     inputs.forEach(z => {
+        if (document.querySelector('#custom') === null){
+            z.value = '';
+        }
         z.addEventListener('input', () => {
-            z.value = z.value < 0 ? 0 : z.value;
+            // z.value = z.value < 0 ? 0 : z.value;
             if (z.id === 'bill'){
                 a = z.valueAsNumber;
             } else if (z.parentNode === column){
@@ -68,21 +74,61 @@ function checkI(){
                     peopleE2.style.display = 'none';
                 }
             }
-            console.log(a);
-            console.log(b);
-            console.log(c);
-            if (a >= 1 && c >= 1 && b === undefined && d !== undefined || a >= 1 && b >= 1 && c >= 1){
-                if (document.querySelector('#custom') !== null){
-                    
-                } else {
-
-                }
-                console.log('good');
-            } else {
-                return;
-            }
+            update();
         })
     })
+}
+
+function update(){
+    if (a >= 1 && c >= 1 && b === undefined && d !== undefined || a >= 1 && b >= 1 && c >= 1){
+        resetDiv.classList.add('active-but');
+        if (document.querySelector('#custom') !== null){
+            b = parseFloat(b) / 100;
+            console.log(b)
+            tip = (a / c) * b;
+        } else {
+            d = parseInt(temp);
+            d = parseFloat(d) / 100;
+            console.log(d)
+            tip = (a / c) * d;
+        }
+        total = (a / c) + tip;
+        tipAmount.innerText = '$' + tip.toFixed(2);
+        totalTip.innerText = '$' + total.toFixed(2);
+    } else {
+        tip = 0;
+        total = 0;
+        tipAmount.innerText = '$' + tip.toFixed(2);
+        totalTip.innerText = '$' + total.toFixed(2);
+    }
+}
+
+resetBtn.addEventListener('click', () => {
+    if (a !== 0){
+        resetDiv.classList.remove('active-but');
+        reset();
+    } else {
+        return;
+    }
+})
+
+function reset(){
+    inputs.forEach(z => {
+        z.value = '';
+    })
+    if (document.querySelector('.col-active') !== null){
+        for (let j = 0; j < col.length; j++){
+            col[j].classList.remove('col-active');
+        }
+    }
+    a = undefined;
+    b = undefined;
+    c = undefined;
+    d = undefined;
+    tip = 0;
+    total = 0;
+    tipAmount.innerText = '$' + tip.toFixed(2);
+    totalTip.innerText = '$' + total.toFixed(2);
 }
 
 checkI();
