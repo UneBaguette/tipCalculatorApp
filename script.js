@@ -63,6 +63,7 @@ function checkI(){
             if (z.id === 'bill'){
                 a = z.valueAsNumber;
             } else if (z.parentNode === column){
+                z.valueAsNumber = z.valueAsNumber < 0 ? 0 : z.valueAsNumber;
                 b = z.valueAsNumber;
                 b = parseFloat(b) / 100;
             } else if (z === people) {
@@ -84,7 +85,7 @@ function checkI(){
 }
 
 function update(){
-    if (a >= 1 && c >= 1 && b === undefined && d !== undefined || a >= 1 && b >= 0.01 && c >= 1){
+    if (a >= 1 && c >= 1 && b === undefined && d !== undefined || a >= 1 && b >= 0 && c >= 1){
         resetDiv.classList.add('active-but');
         if (document.querySelector('#custom') !== null){
             tip = (a / c) * b;
