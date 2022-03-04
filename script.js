@@ -41,6 +41,8 @@ col.forEach(c => {
             }
             d = c.innerText;
             temp = d.replace('%', '');
+            d = parseInt(temp);
+            d = parseFloat(d) / 100;
             update();
         }
         if (document.querySelector('#custom') !== null){
@@ -62,11 +64,13 @@ function checkI(){
                 a = z.valueAsNumber;
             } else if (z.parentNode === column){
                 b = z.valueAsNumber;
+                b = parseFloat(b) / 100;
             } else if (z === people) {
+                z.valueAsNumber = z.valueAsNumber < 0 ? 0 : z.valueAsNumber;
                 c = z.valueAsNumber;
                 const peopleE1 = document.querySelector('.input-people');
                 const peopleE2 = document.querySelector('.people h4');
-                if (people.valueAsNumber === 0){
+                if (people.valueAsNumber <= 0){
                     peopleE1.classList.add('error');
                     peopleE2.style.display = 'inline';
                 } else {
@@ -80,14 +84,11 @@ function checkI(){
 }
 
 function update(){
-    if (a >= 1 && c >= 1 && b === undefined && d !== undefined || a >= 1 && b >= 1 && c >= 1){
+    if (a >= 1 && c >= 1 && b === undefined && d !== undefined || a >= 1 && b >= 0.01 && c >= 1){
         resetDiv.classList.add('active-but');
         if (document.querySelector('#custom') !== null){
-            b = parseFloat(b) / 100;
             tip = (a / c) * b;
         } else {
-            d = parseInt(temp);
-            d = parseFloat(d) / 100;
             tip = (a / c) * d;
         }
         total = (a / c) + tip;
