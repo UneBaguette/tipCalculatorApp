@@ -1,10 +1,10 @@
-const col = document.querySelectorAll('.column div');
 const column = document.querySelector('.column');
 const people = document.querySelector('.input-people input');
 const totalTip = document.querySelector('.total p');
 const tipAmount = document.querySelector('.tip-amount p');
 const resetDiv = document.querySelector('.reset');
 const resetBtn = document.querySelector('.reset button');
+const custom = `<div class="custom">Custom</div>`;
 let inputs = document.querySelectorAll('.content input');
 let tip = 0;
 let total = 0;
@@ -14,44 +14,51 @@ let b;
 let c;
 let d;
 
-col.forEach(c => {
-    c.addEventListener('click', function test() {
-        let col = document.querySelectorAll('.column div');
-        if (c.classList.contains('custom')){
-            c.remove();
-            const input = 
-            `
-            <input type="number" name="custom" id="custom" placeholder="0">
-            `;
-            column.innerHTML += input;
-            document.querySelector('#custom').focus();
-            inputs = document.querySelectorAll('.content input');
-            b = document.querySelector('#custom').valueAsNumber;
-            col = document.querySelectorAll('.column div');
-            checkI();
-        } else {
-            for (let i = 0; i < col.length; i++){
-                if (c === col[i] && !c.classList.contains('col-active')){
-                    c.classList.add('col-active');
-                } else if (c === col[i] && c.classList.contains('col-active')){
-                    c.classList.remove('col-active');
-                } else {
-                    col[i].classList.remove('col-active');
+function columns(){
+    let col = document.querySelectorAll('.column div');
+    col.forEach(c => {
+        c.addEventListener('click', () => {
+            if (c.classList.contains('custom')){
+                c.remove();
+                const input = 
+                `
+                <input type="number" name="custom" id="custom" placeholder="0">
+                `;
+                column.innerHTML += input;
+                document.querySelector('#custom').focus();
+                inputs = document.querySelectorAll('.content input');
+                b = document.querySelector('#custom').valueAsNumber;
+                col = document.querySelectorAll('.column div');
+                for (let j = 0; j < col.length; j++){
+                    col[j].classList.remove('col-active');
                 }
+                columns();
+                checkI();
+            } else {
+                for (let i = 0; i < col.length; i++){
+                    if (c === col[i] && !c.classList.contains('col-active')){
+                        c.classList.add('col-active');
+                    } else if (c === col[i] && c.classList.contains('col-active')){
+                        c.classList.remove('col-active');
+                    } else {
+                        col[i].classList.remove('col-active');
+                    }
+                }
+                if (document.querySelector('#custom') !== null){
+                    document.querySelector('#custom').remove();
+                    column.innerHTML += custom;
+                    col = document.querySelectorAll('.column div');
+                    columns();
+                }
+                d = c.innerText;
+                temp = d.replace('%', '');
+                d = parseInt(temp);
+                d = parseFloat(d) / 100;
+                update();
             }
-            d = c.innerText;
-            temp = d.replace('%', '');
-            d = parseInt(temp);
-            d = parseFloat(d) / 100;
-            update();
-        }
-        if (document.querySelector('#custom') !== null){
-            for (let j = 0; j < col.length; j++){
-                col[j].classList.remove('col-active');
-            }
-        }
+        })
     })
-})
+}
 
 function checkI(){
     inputs.forEach(z => {
@@ -59,7 +66,6 @@ function checkI(){
             z.value = '';
         }
         z.addEventListener('input', () => {
-            // z.value = z.value < 0 ? 0 : z.value;
             if (z.id === 'bill'){
                 a = z.valueAsNumber;
             } else if (z.parentNode === column){
@@ -116,10 +122,16 @@ function reset(){
     inputs.forEach(z => {
         z.value = '';
     })
-    if (document.querySelector('.col-active') !== null){
+    if (document.querySelectorAll('.col-active') !== null){
+        let col = document.querySelectorAll('.column div');
         for (let j = 0; j < col.length; j++){
             col[j].classList.remove('col-active');
         }
+    }
+    if (document.querySelector('#custom') !== null){
+        document.querySelector('#custom').remove();
+        column.innerHTML += custom;
+        columns();
     }
     a = undefined;
     b = undefined;
@@ -132,3 +144,4 @@ function reset(){
 }
 
 checkI();
+columns();
