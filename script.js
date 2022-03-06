@@ -1,5 +1,7 @@
 const column = document.querySelector('.column');
 const people = document.querySelector('.input-people input');
+const peopleE1 = document.querySelector('.input-people');
+const peopleE2 = document.querySelector('.people h4');
 const totalTip = document.querySelector('.total p');
 const tipAmount = document.querySelector('.tip-amount p');
 const resetDiv = document.querySelector('.reset');
@@ -8,7 +10,6 @@ const custom = `<div class="custom">Custom</div>`;
 let inputs = document.querySelectorAll('.content input');
 let tip = 0;
 let total = 0;
-let temp;
 let a;
 let b;
 let c;
@@ -52,7 +53,7 @@ function columns(){
                     columns();
                 }
                 d = c.innerText;
-                temp = d.replace('%', '');
+                let temp = d.replace('%', '');
                 d = parseInt(temp);
                 d = parseFloat(d) / 100;
                 update();
@@ -76,8 +77,6 @@ function checkI(){
             } else if (z === people) {
                 z.valueAsNumber = z.valueAsNumber < 0 ? 0 : z.valueAsNumber;
                 c = z.valueAsNumber;
-                const peopleE1 = document.querySelector('.input-people');
-                const peopleE2 = document.querySelector('.people h4');
                 if (people.valueAsNumber <= 0){
                     peopleE1.classList.add('error');
                     peopleE2.style.display = 'inline';
@@ -111,8 +110,12 @@ function update(){
 }
 
 resetBtn.addEventListener('click', () => {
-    if (a !== 0){
+    if (a !== 0 || b !== undefined || c !== 0 || d !== undefined){
         resetDiv.classList.remove('active-but');
+        if (peopleE1.classList.contains('error')){
+            peopleE1.classList.remove('error');
+            peopleE2.style.display = 'none';
+        }
         reset();
     } else {
         return;
