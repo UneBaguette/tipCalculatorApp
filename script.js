@@ -35,6 +35,7 @@ function columns(){
                 columns();
                 checkI();
             } else {
+                b = isNaN(b) ? undefined : b;
                 for (let i = 0; i < col.length; i++){
                     if (c === col[i] && !c.classList.contains('col-active')){
                         c.classList.add('col-active');
@@ -69,6 +70,7 @@ function checkI(){
             if (z.id === 'bill'){
                 a = z.valueAsNumber;
             } else if (z.parentNode === column){
+                if (b.valueAsNumber === NaN) return;
                 z.valueAsNumber = z.valueAsNumber < 0 ? 0 : z.valueAsNumber;
                 b = z.valueAsNumber;
                 b = parseFloat(b) / 100;
