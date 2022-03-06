@@ -70,7 +70,6 @@ function checkI(){
             if (z.id === 'bill'){
                 a = z.valueAsNumber;
             } else if (z.parentNode === column){
-                if (b.valueAsNumber === NaN) return;
                 z.valueAsNumber = z.valueAsNumber < 0 ? 0 : z.valueAsNumber;
                 b = z.valueAsNumber;
                 b = parseFloat(b) / 100;
