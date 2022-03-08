@@ -36,7 +36,7 @@ function columns(){
                 columns();
                 checkI();
             } else {
-                b = isNaN(b) ? undefined : b;
+                b = undefined;
                 for (let i = 0; i < col.length; i++){
                     if (c === col[i] && !c.classList.contains('col-active')){
                         c.classList.add('col-active');
@@ -56,6 +56,7 @@ function columns(){
                 let temp = d.replace('%', '');
                 d = parseInt(temp);
                 d = parseFloat(d) / 100;
+                if (!c.classList.contains('col-active')) d = undefined;
                 update();
             }
         })
